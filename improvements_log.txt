@@ -1,0 +1,57 @@
+
+IMPROVEMENTS AND CHANGES DOCUMENTATION
+========================================
+
+1. DATA CLEANING IMPROVEMENTS
+   ✓ Removed duplicate records (if any)
+   ✓ Converted Date column to datetime format for proper time-series handling
+   ✓ Cleaned numeric columns: Price, Open, High, Low (converted from string to float)
+   ✓ Processed Volume data: removed 'K' suffix and scaled to actual volume numbers
+   ✓ Processed Change %: removed '%' symbol and converted to numeric float
+   ✓ Result: Cleaned dataset with proper data types and no missing values
+
+2. FEATURE ENGINEERING IMPROVEMENTS
+   ✓ Price_Range = High - Low (captures intraday volatility)
+   ✓ Price_Momentum = Price - Open (captures closing direction relative to opening)
+   ✓ Daily_Return = Price % Change (normalized price movements)
+   ✓ MA_5 = 5-day Moving Average (short-term trend)
+   ✓ MA_10 = 10-day Moving Average (medium-term trend)
+   ✓ Volatility = 10-day Rolling Standard Deviation (market uncertainty)
+   ✓ Result: 11 total features capturing multiple aspects of price dynamics
+
+3. DATA PREPROCESSING IMPROVEMENTS
+   ✓ Used StandardScaler for feature normalization (essential for regularized models)
+   ✓ Split data: 80% training, 20% testing (prevents overfitting)
+   ✓ Maintained proper train-test separation before scaling (prevents data leakage)
+   ✓ Result: Properly normalized features and unbiased model evaluation
+
+4. MODEL SELECTION IMPROVEMENTS
+   ✓ Tested 6 different algorithms:
+     - Linear Regression (baseline)
+     - Ridge Regression (handles multicollinearity)
+     - Lasso Regression (feature selection via sparsity)
+     - ElasticNet (combines Ridge and Lasso benefits)
+     - Random Forest (captures non-linear relationships)
+     - Gradient Boosting (ensemble approach with residual optimization)
+   ✓ Result: Comprehensive coverage of linear and non-linear models
+
+5. HYPERPARAMETER TUNING
+   ✓ Ridge: alpha=1.0 (moderate regularization)
+   ✓ Lasso: alpha=0.01 (light regularization to preserve all features)
+   ✓ ElasticNet: alpha=0.01, l1_ratio=0.5 (balanced Ridge-Lasso)
+   ✓ Random Forest: n_estimators=100 (sufficient trees for stability)
+   ✓ Gradient Boosting: n_estimators=100, learning_rate=0.1 (controlled learning)
+
+6. EVALUATION METRICS
+   ✓ R² Score: Explains variance proportion in predictions
+   ✓ RMSE: Root Mean Squared Error (penalizes large errors)
+   ✓ MAE: Mean Absolute Error (interpretable average error)
+   ✓ Cross-Validation: 5-fold CV to assess generalization capability
+   ✓ Result: Multi-faceted performance assessment
+
+KEY FINDINGS:
+- High correlation between Open, High, Low, and Price (expected, as they're same-day prices)
+- Volume and Change % show lower correlation with Price
+- Engineered features (MA, Volatility) improve model interpretability
+- Ensemble methods generally outperform linear models
+- Regularized models prevent overfitting due to multicollinearity
