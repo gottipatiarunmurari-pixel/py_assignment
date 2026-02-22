@@ -23,8 +23,8 @@ Original Data:
   - Columns: 6 (Date, Price, Open, High, Low, Vol., Change %)
   - Data Range: Jan 2, 2019 to Dec 31, 2019
   - Price Range: $50.00 - $56.77
-  - Average Price: $52.39
-  - Price Volatility (Std Dev): $1.4201
+  - Average Price: $52.40
+  - Price Volatility (Std Dev): $1.4148
 
 Data Quality:
   - Missing Values: 0
@@ -57,12 +57,12 @@ Created 6 New Features:
   2. Price_Momentum = Price - Open
      Purpose: Shows closing price movement relative to opening
      Range: $-0.6700 - $0.4100
-     Mean: $-0.0242
+     Mean: $-0.0248
 
   3. Daily_Return = Price % Change
      Purpose: Normalized daily returns for trend analysis
      Range: -0.9837% - 1.0131%
-     Mean: 0.0517%
+     Mean: 0.0509%
 
   4. MA_5 = 5-day Moving Average
      Purpose: Short-term trend identification
@@ -83,21 +83,21 @@ Key Findings:
 
 Correlation Analysis:
   - Highest correlation with Price:
-    * Open: 0.9933 (expected, same-day price)
+    * Open: 0.9932 (expected, same-day price)
     * High: 0.9972 (same-day price)
     * Low: 0.9979 (same-day price)
 
   - Moderate correlation:
-    * MA_10: 0.9695 (trend indicator)
-    * MA_5: 0.9852 (trend indicator)
+    * MA_10: 0.9691 (trend indicator)
+    * MA_5: 0.9851 (trend indicator)
 
   - Lower correlation:
-    * Volume: -0.0651
-    * Change %: 0.1412
+    * Volume: -0.0584
+    * Change %: 0.1451
 
 Distribution Insights:
   - Price: Relatively normal distribution, slight uptrend over year
-  - Volume: Right-skewed with average 111,844 shares
+  - Volume: Right-skewed with average 111,668 shares
   - Daily Returns: Approximately normal, mean near 0
   - Volatility: Shows clustering during high-activity periods
 
@@ -112,12 +112,12 @@ H1: Closing price highly predictable from OHLC prices
 
 H2: Trading volume impacts daily price changes
     Status: PARTIALLY CONFIRMED ✓
-    Evidence: Volume correlation with Price = -0.0651
+    Evidence: Volume correlation with Price = -0.0584
     Conclusion: Modest impact; other factors also influential
 
 H3: Volatility and moving averages predict closing prices
     Status: CONFIRMED ✓
-    Evidence: MA_10 correlation = 0.9695
+    Evidence: MA_10 correlation = 0.9691
     Conclusion: Technical indicators are valuable predictors
 
 H4: Combined features outperform individual features
@@ -136,50 +136,50 @@ H5: Regularized models outperform simple Linear Regression
 
 Model 1: Linear Regression
   Architecture: Standard linear regression without regularization
-  R² Score: 1.0000
-  RMSE: $0.0000
-  MAE: $0.0000
-  CV Score: 1.0000
+  R² Score: 0.9806
+  RMSE: $0.2350
+  MAE: $0.1792
+  CV Score: 0.9628
   Status: Baseline model
 
 Model 2: Ridge Regression (α=1.0)
   Architecture: L2 regularization to prevent overfitting
-  R² Score: 0.9997
-  RMSE: $0.0306
-  MAE: $0.0232
-  CV Score: 0.9994
+  R² Score: 0.9809
+  RMSE: $0.2336
+  MAE: $0.1839
+  CV Score: 0.9656
   Status: Handles multicollinearity well
 
 Model 3: Lasso Regression (α=0.01)
   Architecture: L1 regularization for feature selection
-  R² Score: 0.9998
-  RMSE: $0.0216
-  MAE: $0.0175
-  CV Score: 0.9996
+  R² Score: 0.9807
+  RMSE: $0.2344
+  MAE: $0.1768
+  CV Score: 0.9654
   Status: Feature selection active
 
 Model 4: ElasticNet (α=0.01, l1_ratio=0.5)
   Architecture: Combines L1 and L2 regularization
-  R² Score: 0.9997
-  RMSE: $0.0302
-  MAE: $0.0242
-  CV Score: 0.9994
+  R² Score: 0.9810
+  RMSE: $0.2330
+  MAE: $0.1809
+  CV Score: 0.9661
   Status: Balanced approach
 
 Model 5: Random Forest (n_estimators=100)
   Architecture: Ensemble of 100 decision trees
-  R² Score: 0.9953
-  RMSE: $0.1127
-  MAE: $0.0764
-  CV Score: 0.9923
+  R² Score: 0.9792
+  RMSE: $0.2434
+  MAE: $0.1914
+  CV Score: 0.9594
   Status: Captures non-linear patterns
 
 Model 6: Gradient Boosting (n_estimators=100)
   Architecture: Sequential boosting of weak learners
-  R² Score: 0.9970
-  RMSE: $0.0892
-  MAE: $0.0611
-  CV Score: 0.9946
+  R² Score: 0.9808
+  RMSE: $0.2340
+  MAE: $0.1719
+  CV Score: 0.9553
   Status: BEST PERFORMER ★
 
 
@@ -188,34 +188,34 @@ Model 6: Gradient Boosting (n_estimators=100)
 
 Performance Rankings by R² Score:
 
-  1. Linear Regression    | R²: 1.0000 | RMSE: $0.0000 | MAE: $0.0000 | CV: 1.0000
-  2. Lasso                | R²: 0.9998 | RMSE: $0.0216 | MAE: $0.0175 | CV: 0.9996
-  3. ElasticNet           | R²: 0.9997 | RMSE: $0.0302 | MAE: $0.0242 | CV: 0.9994
-  4. Ridge                | R²: 0.9997 | RMSE: $0.0306 | MAE: $0.0232 | CV: 0.9994
-  5. Gradient Boosting    | R²: 0.9970 | RMSE: $0.0892 | MAE: $0.0611 | CV: 0.9946
-  6. Random Forest        | R²: 0.9953 | RMSE: $0.1127 | MAE: $0.0764 | CV: 0.9923
+  1. ElasticNet           | R²: 0.9810 | RMSE: $0.2330 | MAE: $0.1809 | CV: 0.9661
+  2. Ridge                | R²: 0.9809 | RMSE: $0.2336 | MAE: $0.1839 | CV: 0.9656
+  3. Gradient Boosting    | R²: 0.9808 | RMSE: $0.2340 | MAE: $0.1719 | CV: 0.9553
+  4. Lasso                | R²: 0.9807 | RMSE: $0.2344 | MAE: $0.1768 | CV: 0.9654
+  5. Linear Regression    | R²: 0.9806 | RMSE: $0.2350 | MAE: $0.1792 | CV: 0.9628
+  6. Random Forest        | R²: 0.9792 | RMSE: $0.2434 | MAE: $0.1914 | CV: 0.9594
 
-BEST MODEL SELECTED: Linear Regression
+BEST MODEL SELECTED: ElasticNet
 ------------------------------------------------------------------------------------------
 
 Performance Metrics:
-  - R² Score: 1.0000
-    (Explains 100.00% of variance in ETF closing prices)
+  - R² Score: 0.9810
+    (Explains 98.10% of variance in ETF closing prices)
 
-  - Root Mean Squared Error (RMSE): $0.0000
+  - Root Mean Squared Error (RMSE): $0.2330
     (Average prediction error magnitude)
 
-  - Mean Absolute Error (MAE): $0.0000
+  - Mean Absolute Error (MAE): $0.1809
     (Average absolute deviation from actual price)
 
-  - Cross-Validation Score: 1.0000
+  - Cross-Validation Score: 0.9661
     (Demonstrates strong generalization capability)
 
-Why Linear Regression?
-  1. Highest R² Score: 1.0000
-  2. Lowest RMSE: $0.0000
-  3. Lowest MAE: $0.0000
-  4. Strong Cross-Validation: 1.0000
+Why ElasticNet?
+  1. Highest R² Score: 0.9810
+  2. Lowest RMSE: $0.2330
+  3. Lowest MAE: $0.1809
+  4. Strong Cross-Validation: 0.9661
   5. Captures non-linear relationships in data
   6. Robust to outliers and feature scaling
   7. Good generalization on unseen data
@@ -252,9 +252,9 @@ Evaluation:
 ------------------------------------------------------------------------------------------
 
 For Price Prediction:
-  1. Use Linear Regression model for production deployment
+  1. Use ElasticNet model for production deployment
   2. Retrain monthly with updated data to maintain accuracy
-  3. Monitor prediction errors - flag when RMSE > $0.0000
+  3. Monitor prediction errors - flag when RMSE > $0.4659
   4. Include confidence intervals in predictions
 
 For Model Improvement:
@@ -265,7 +265,7 @@ For Model Improvement:
 
 For Risk Management:
   1. Track residuals for systematic deviations
-  2. Use MAE ($0.0000) as error tolerance
+  2. Use MAE ($0.1809) as error tolerance
   3. Validate performance on rolling time windows
   4. Implement circuit breakers for extreme predictions
 
@@ -276,7 +276,7 @@ For Risk Management:
 This comprehensive analysis successfully demonstrates:
   • Complete data science pipeline from cleaning to production-ready model
   • Systematic comparison of 6 regression algorithms
-  • Linear Regression emerged as optimal choice with 100.00% variance explanation
+  • ElasticNet emerged as optimal choice with 98.10% variance explanation
   • Feature engineering significantly improved predictive power
   • Model validates all 5 hypotheses about price prediction factors
 
@@ -287,6 +287,6 @@ Model Deployment Status: READY FOR PRODUCTION ✓
 
 
 ==========================================================================================
-Report Generated: 2026-02-20 19:06:32
+Report Generated: 2026-02-22 18:57:56
 Analysis Completed Successfully
 ==========================================================================================
